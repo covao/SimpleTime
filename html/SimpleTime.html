@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <script src="p5.min.js"></script>
+  </head>
+      <style type="text/css">
+        @font-face {
+            font-family: 'digit'; 
+			src: url('./Digit.TTF') format("truetype");        }
+    </style>
+  <body bgcolor="#00000">
+    <main>
+    </main>
+<script>
+
+function setup() {
+  document.body.style.overflow = "hidden";
+  c=createCanvas(windowWidth, windowHeight);
+  
+  textFont('digit');
+  textAlign(LEFT, CENTER);
+  frameRate(10);
+  pos=1.0;
+  sc=2*(windowWidth/1920);
+  
+}
+
+function draw() {
+  background(0);
+  scale(pos*sc,pos*sc);
+  translate(100,0)
+  green = frameCount*10
+  if(green>255){
+    green = 255;
+    frameRate(2);
+  }
+   
+  fill(color(0, green, 0));
+  textSize(100);
+  let date = new Date();
+  
+  let s1= year()+"-"+ ("  " + month() ).substr(-2)+"-"+("  " + day() ).substr(-2)+" "+[ "SUN", "MON", "TSU", "WED", "THU", "FRI", "SAT" ][ date.getDay()] ;
+  translate(0, 50);
+  text(s1, 0, 100);
+
+  textSize(200);
+  let s2 = ("  " + +hour() ).substr(-2)+":"+ ("00" + minute() ).substr(-2)+"";
+  text(s2, 0, 300);
+  
+  textSize(140);
+  let s3 = ("00" + second() ).substr(-2);
+  text(s3, 520, 330);
+  
+}
+
+function mouseWheel(event) {
+  //print(event.delta);
+  pos -= event.delta/1000;
+  if(pos>4.0){
+    pos=4.0;
+  }else if(pos<0.5){
+    pos=0.5;
+  } 
+}
+
+function mousePressed() { // Full screen
+  let fs = fullscreen();
+  fullscreen(!fs);
+}
+
+function windowResized() { // Resize
+  resizeCanvas(windowWidth, windowHeight);
+  sc=2*(windowWidth/1920);
+
+}
+
+
+
+</script>
+  </body>
+</html>
